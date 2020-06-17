@@ -57,12 +57,16 @@ public class DFA {
             char currentStateChar = currentState.charAt(0);
 
             if (currentState.length() == 1 && state1Transition == currentStateChar) {
+                if (valueTransition == input.charAt(currentValuePosition)) {
                 return checkTransition(input, valueTransition, state2Transition);
+                }
             }
             if (currentState.length() > 1) {
                 for (int j = 0; j < currentState.length(); j++) {
                     if (state1Transition == currentState.charAt(j)) {
+                        if (valueTransition == input.charAt(currentValuePosition)) {
                         return checkTransition(input, valueTransition, state2Transition);
+                        }
                     }
                 }
             }
@@ -73,8 +77,6 @@ public class DFA {
     }
 
     private boolean checkTransition(String input, char valueTransition, char state2Transition) {
-        if (valueTransition == input.charAt(currentValuePosition)) {
-
             currentState = "" + state2Transition;
             currentValuePosition++;
 
@@ -83,9 +85,6 @@ public class DFA {
             }
 
             return checkTransition(input);
-        }
-
-        return false;
     }
 
     private boolean checkIfCanEnd(String currentState) {
