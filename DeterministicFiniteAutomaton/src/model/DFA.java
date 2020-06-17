@@ -32,6 +32,106 @@ public class DFA {
         return false;
     }
     
+    public boolean checkAlphabet(String input) {
+        char inputFirstCharacter = input.charAt(0);
+
+        if (checkIfCanStart(inputFirstCharacter)) {
+            if (input.length() == 1) {
+                return checkIfCanEnd(currentState);
+            }
+            if (checkTransition(input)) {
+                currentState = "" + initialState;
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    private boolean checkTransition(String input) {
+        for (int i = 0; i < transitions.size(); i++) {
+
+            char state1Transition = transitions.get(i).charAt(0);
+            char valueTransition = transitions.get(i).charAt(1);
+            char state2Transition = transitions.get(i).charAt(2);
+            char currentStateChar = currentState.charAt(0);
+
+            if (currentState.length() == 1 && state1Transition == currentStateChar) {
+                return checkTransition(input, valueTransition, state2Transition);
+            }
+            if (currentState.length() > 1) {
+                for (int j = 0; j < currentState.length(); j++) {
+                    if (state1Transition == currentState.charAt(j)) {
+                        return checkTransition(input, valueTransition, state2Transition);
+                    }
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+    private boolean checkTransition(String input, char valueTransition, char state2Transition) {
+        if (valueTransition == input.charAt(currentValuePosition)) {
+
+            currentState = "" + state2Transition;
+            currentValuePosition++;
+
+            if (input.length() == currentValuePosition) {
+                return checkIfCanEnd(currentState);
+            }
+
+            return checkTransition(input);
+        }
+
+        return false;
+    }
+
+    private boolean checkIfCanEnd(String currentState) {
+        for (int i = 0; i < finalStates.size(); i++) {
+            for (int j = 0; j < currentState.length(); j++) {
+                char currentSt = currentState.charAt(j);
+                char finalSt = finalStates.get(i).charAt(0);
+
+                if (currentSt == finalSt)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkIfCanStart(char inputFirstCharacter) {
+        for (int i = 0; i < transitions.size(); i++) {
+            char state1Transition = transitions.get(i).charAt(0);
+            char valueTransition = transitions.get(i).charAt(1);
+
+            if (state1Transition == initialState) {
+                if (valueTransition == inputFirstCharacter) {
+                    currentState = checkForOtherOptions(state1Transition, inputFirstCharacter);
+                    currentValuePosition = 1;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private String checkForOtherOptions(char state, char value) {
+        String currentSt = "";
+
+        for (int i = 0; i < transitions.size(); i++) {
+            char state1Transition = transitions.get(i).charAt(0);
+            char valueTransition = transitions.get(i).charAt(1);
+            char state2Transition = transitions.get(i).charAt(2);
+
+            if (state1Transition == state && valueTransition == value) {
+                currentSt += state2Transition;
+            }
+        }
+        return currentSt;
+    }
+    
     public void addFinalState(String finalState) {
         finalStates.add(finalState);
     }
