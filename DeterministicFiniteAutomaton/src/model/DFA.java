@@ -159,6 +159,10 @@ public class DFA {
     public void setInitialState(char initialState) {
         this.initialState = initialState;
     }
+
+    public char getInitialState() {
+        return initialState;
+    }
     
     public List<String> getFinalStates() {
         return finalStates;
