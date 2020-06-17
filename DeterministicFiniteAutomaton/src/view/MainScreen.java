@@ -6,7 +6,6 @@ import java.util.List;
 
 public class MainScreen extends javax.swing.JFrame {
 
-    private WelcomeScreen welcomeScreen;
     private DFA dfa;
 
     public MainScreen() {
@@ -22,16 +21,16 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void showTransitions() {
         transitionsTA.setText(dfa.getTransitions());
-        
+
         initialStateLbl.setText(dfa.getInitialState() + "");
         finalStateLbl.setText(showFinalStates());
     }
-    
-    private String showFinalStates(){
-        List <String> finalStates = dfa.getFinalStates();
-        
+
+    private String showFinalStates() {
+        List<String> finalStates = dfa.getFinalStates();
+
         String finalSt = "";
-        for(int i = 0; i < finalStates.size(); i++){
+        for (int i = 0; i < finalStates.size(); i++) {
             finalSt += finalStates.get(i) + ", ";
         }
         return finalSt;
@@ -45,9 +44,10 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         textTF = new javax.swing.JTextField();
-        checkBtn = new javax.swing.JButton();
+        resetBtn = new javax.swing.JButton();
         resultLbl = new javax.swing.JLabel();
         closeResultBtn = new javax.swing.JButton();
+        checkBtn1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         transitionsTA = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
@@ -68,11 +68,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         textTF.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
-        checkBtn.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        checkBtn.setText("Check");
-        checkBtn.addActionListener(new java.awt.event.ActionListener() {
+        resetBtn.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        resetBtn.setText("Reset");
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkBtnActionPerformed(evt);
+                resetBtnActionPerformed(evt);
             }
         });
 
@@ -87,23 +87,36 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
 
+        checkBtn1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        checkBtn1.setText("Check");
+        checkBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBtn1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(42, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(textTF, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(checkBtn)
-                            .addComponent(resultLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(closeResultBtn)))
-                .addGap(39, 39, 39))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textTF, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(resultLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(closeResultBtn)))
+                        .addGap(39, 39, 39))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(checkBtn1)
+                        .addGap(37, 37, 37)
+                        .addComponent(resetBtn)
+                        .addGap(63, 63, 63))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,7 +126,9 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(textTF, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(checkBtn)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkBtn1)
+                    .addComponent(resetBtn))
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(resultLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,7 +165,18 @@ public class MainScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void checkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBtnActionPerformed
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
+        textTF.setText("");
+        resultLbl.setText("");
+        closeResultBtn.setVisible(false);
+    }//GEN-LAST:event_resetBtnActionPerformed
+
+    private void closeResultBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeResultBtnActionPerformed
+        resultLbl.setText("");
+        closeResultBtn.setVisible(false);
+    }//GEN-LAST:event_closeResultBtnActionPerformed
+
+    private void checkBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBtn1ActionPerformed
         String text = textTF.getText().trim().toUpperCase();
         if (!text.equals("")) {
             if (dfa.checkAlphabet(text)) {
@@ -164,12 +190,7 @@ public class MainScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Empty field.", "ERROR", JOptionPane.ERROR_MESSAGE);
             textTF.setText("");
         }
-    }//GEN-LAST:event_checkBtnActionPerformed
-
-    private void closeResultBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeResultBtnActionPerformed
-        resultLbl.setText("");
-        closeResultBtn.setVisible(false);
-    }//GEN-LAST:event_closeResultBtnActionPerformed
+    }//GEN-LAST:event_checkBtn1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,7 +228,7 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton checkBtn;
+    private javax.swing.JButton checkBtn1;
     private javax.swing.JButton closeResultBtn;
     private javax.swing.JLabel finalStateLbl;
     private javax.swing.JLabel initialStateLbl;
@@ -217,6 +238,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton resetBtn;
     private javax.swing.JLabel resultLbl;
     private javax.swing.JTextField textTF;
     private javax.swing.JTextArea transitionsTA;
