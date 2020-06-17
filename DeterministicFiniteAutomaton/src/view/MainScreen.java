@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.JOptionPane;
 import model.DFA;
+import java.util.List;
 
 public class MainScreen extends javax.swing.JFrame {
 
@@ -21,6 +22,19 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void showTransitions() {
         transitionsTA.setText(dfa.getTransitions());
+        
+        initialStateLbl.setText(dfa.getInitialState() + "");
+        finalStateLbl.setText(showFinalStates());
+    }
+    
+    private String showFinalStates(){
+        List <String> finalStates = dfa.getFinalStates();
+        
+        String finalSt = "";
+        for(int i = 0; i < finalStates.size(); i++){
+            finalSt += finalStates.get(i) + ", ";
+        }
+        return finalSt;
     }
 
     @SuppressWarnings("unchecked")
@@ -36,6 +50,10 @@ public class MainScreen extends javax.swing.JFrame {
         closeResultBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         transitionsTA = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        finalStateLbl = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        initialStateLbl = new javax.swing.JLabel();
 
         jTextField2.setText("jTextField2");
 
@@ -107,22 +125,44 @@ public class MainScreen extends javax.swing.JFrame {
 
         transitionsTA.setColumns(20);
         transitionsTA.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        transitionsTA.setLineWrap(true);
         transitionsTA.setRows(5);
+        transitionsTA.setWrapStyleWord(true);
         jScrollPane1.setViewportView(transitionsTA);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 350, 350));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 350, 300));
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel2.setText("Final State(s):");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 130, 30));
+
+        finalStateLbl.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        getContentPane().add(finalStateLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, 710, 30));
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel4.setText("Initial State:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 130, 30));
+
+        initialStateLbl.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        getContentPane().add(initialStateLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 130, 30));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBtnActionPerformed
-        String text = textTF.getText().trim();
+        String text = textTF.getText().trim().toUpperCase();
         if (!text.equals("")) {
-            resultLbl.setText("Not recognized!");
-            closeResultBtn.setVisible(true);
+            if (dfa.checkAlphabet(text)) {
+                resultLbl.setText("Recognized!");
+                closeResultBtn.setVisible(true);
+            } else {
+                resultLbl.setText("Not recognized!");
+                closeResultBtn.setVisible(true);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Empty field.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            textTF.setText("");
         }
     }//GEN-LAST:event_checkBtnActionPerformed
 
@@ -169,7 +209,11 @@ public class MainScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton checkBtn;
     private javax.swing.JButton closeResultBtn;
+    private javax.swing.JLabel finalStateLbl;
+    private javax.swing.JLabel initialStateLbl;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
