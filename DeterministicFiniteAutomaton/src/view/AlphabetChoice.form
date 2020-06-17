@@ -32,14 +32,14 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" pref="246" max="-2" attributes="0"/>
+              <Component id="numbersBtn" min="-2" pref="246" max="-2" attributes="0"/>
               <EmptySpace pref="171" max="32767" attributes="0"/>
-              <Component id="jButton3" min="-2" pref="246" max="-2" attributes="0"/>
+              <Component id="lettersBtn" min="-2" pref="246" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="246" max="-2" attributes="0"/>
+              <Component id="binaryBtn" min="-2" pref="246" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="252" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -51,11 +51,11 @@
               <Component id="jLabel1" min="-2" pref="82" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton2" alignment="3" min="-2" pref="85" max="-2" attributes="0"/>
-                  <Component id="jButton3" alignment="3" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="numbersBtn" alignment="3" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="lettersBtn" alignment="3" min="-2" pref="85" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="48" max="32767" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="85" max="-2" attributes="0"/>
+              <Component id="binaryBtn" min="-2" pref="85" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -71,20 +71,29 @@
         <Property name="text" type="java.lang.String" value="Choose your alphabet:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="binaryBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Binary"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="binaryBtnActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="numbersBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Numbers"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="numbersBtnActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="lettersBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Letters"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lettersBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
