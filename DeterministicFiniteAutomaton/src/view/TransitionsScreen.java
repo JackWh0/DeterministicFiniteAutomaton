@@ -156,14 +156,16 @@ public class TransitionsScreen extends javax.swing.JFrame {
         String state2 = state2CB.getSelectedItem().toString();
         String value = alphabetCB.getSelectedItem().toString();
         String transition = state1 + value + state2;
-        if (!dfa.checkRepeatedTransition(transition)) {
-            dfa.addTransition(state1, value, state2);
-            transitionsTA.setText(dfa.getTransitions());
-            doneBtn.setVisible(true);
-        }else{
-            JOptionPane.showMessageDialog(null, "Repeated transition!", "ERRO!", JOptionPane.ERROR_MESSAGE);
-        }
-       
+
+            if (!dfa.checkRepeatedValue(transition)) {
+                dfa.addTransition(state1, value, state2);
+                transitionsTA.setText(dfa.getTransitions());
+                doneBtn.setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Repeated value using the state " + state1 + "!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            }
+
     }//GEN-LAST:event_addTransitionBtnActionPerformed
 
     private void doneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneBtnActionPerformed

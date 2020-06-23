@@ -10,28 +10,34 @@ public class DFA {
     private char initialState;
     private List<String> finalStates;
     private List<String> transitions;
-    private String currentState;
+    private char currentState;
     private int currentValuePosition;
 
     public DFA() {
         alphabet = new ArrayList<>();
         finalStates = new ArrayList<>();
         transitions = new ArrayList<>();
-        currentState = "" + initialState;
+        currentState = initialState;
         currentValuePosition = 0;
     }
 
-    public boolean checkRepeatedTransition(String transition) {
+    public boolean checkRepeatedValue(String transition) {
+        char state1 = transition.charAt(0);
+        char value = transition.charAt(1);
+
         if (!transitions.isEmpty()) {
             for (int i = 0; i < transitions.size(); i++) {
-                if (transitions.get(i).equals(transition)) {
+                char state1TransitionList = transitions.get(i).charAt(0);
+                char valueTransitionList = transitions.get(i).charAt(1);
+
+                if (state1 == state1TransitionList && value == valueTransitionList) {
                     return true;
                 }
             }
         }
         return false;
     }
-    
+
     public boolean checkAlphabet(String input) {
         char inputFirstCharacter = input.charAt(0);
 
@@ -40,63 +46,45 @@ public class DFA {
                 return checkIfCanEnd(currentState);
             }
             if (checkTransition(input)) {
-                currentState = "" + initialState;
+                currentState = initialState;
                 return true;
             }
         }
-        
+
         return false;
     }
 
     private boolean checkTransition(String input) {
         for (int i = 0; i < transitions.size(); i++) {
-
             char state1Transition = transitions.get(i).charAt(0);
             char valueTransition = transitions.get(i).charAt(1);
             char state2Transition = transitions.get(i).charAt(2);
-            char currentStateChar = currentState.charAt(0);
 
-            if (currentState.length() == 1 && state1Transition == currentStateChar) {
+            if (state1Transition == currentState) {
                 if (valueTransition == input.charAt(currentValuePosition)) {
-                return checkTransition(input, valueTransition, state2Transition);
-                }
-            }
-            if (currentState.length() > 1) {
-                for (int j = 0; j < currentState.length(); j++) {
-                    if (state1Transition == currentState.charAt(j)) {
-                        if (valueTransition == input.charAt(currentValuePosition)) {
-                        return checkTransition(input, valueTransition, state2Transition);
-                        }
-                    }
-                }
-            }
+                    currentState = state2Transition;
+                    currentValuePosition++;
 
+                    if (input.length() == currentValuePosition) {
+                        return checkIfCanEnd(currentState);
+                    }
+                    return checkTransition(input);
+                }
+            }
         }
 
         return false;
     }
 
-    private boolean checkTransition(String input, char valueTransition, char state2Transition) {
-            currentState = "" + state2Transition;
-            currentValuePosition++;
-
-            if (input.length() == currentValuePosition) {
-                return checkIfCanEnd(currentState);
-            }
-
-            return checkTransition(input);
-    }
-
-    private boolean checkIfCanEnd(String currentState) {
+    private boolean checkIfCanEnd(char currentState) {
         for (int i = 0; i < finalStates.size(); i++) {
-            for (int j = 0; j < currentState.length(); j++) {
-                char currentSt = currentState.charAt(j);
-                char finalSt = finalStates.get(i).charAt(0);
+            char finalSt = finalStates.get(i).charAt(0);
 
-                if (currentSt == finalSt)
-                    return true;
+            if (currentState == finalSt) {
+                return true;
             }
         }
+
         return false;
     }
 
@@ -104,10 +92,11 @@ public class DFA {
         for (int i = 0; i < transitions.size(); i++) {
             char state1Transition = transitions.get(i).charAt(0);
             char valueTransition = transitions.get(i).charAt(1);
+            char state2Transition = transitions.get(i).charAt(2);
 
             if (state1Transition == initialState) {
                 if (valueTransition == inputFirstCharacter) {
-                    currentState = checkForOtherOptions(state1Transition, inputFirstCharacter);
+                    currentState = state2Transition;
                     currentValuePosition = 1;
                     return true;
                 }
@@ -116,21 +105,6 @@ public class DFA {
         return false;
     }
 
-    private String checkForOtherOptions(char state, char value) {
-        String currentSt = "";
-
-        for (int i = 0; i < transitions.size(); i++) {
-            char state1Transition = transitions.get(i).charAt(0);
-            char valueTransition = transitions.get(i).charAt(1);
-            char state2Transition = transitions.get(i).charAt(2);
-
-            if (state1Transition == state && valueTransition == value) {
-                currentSt += state2Transition;
-            }
-        }
-        return currentSt;
-    }
-    
     public void addFinalState(String finalState) {
         finalStates.add(finalState);
     }
@@ -162,7 +136,7 @@ public class DFA {
     public char getInitialState() {
         return initialState;
     }
-    
+
     public List<String> getFinalStates() {
         return finalStates;
     }
